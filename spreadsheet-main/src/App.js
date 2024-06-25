@@ -22,7 +22,7 @@ const App = () => {
 
 
   const fetchData = async () => {
-    const response = await axios.get('http://spreadsheetserver-production.up.railway.app/api/data');
+    const response = await axios.get('https://spreadsheetserver-production.up.railway.app/api/data');
 
     var rowLength = 0;
     var colLength = 0;
@@ -67,28 +67,28 @@ const App = () => {
   }
   ///////////////////////////// UPDATE FUNCTION ////////////////////////
   const addRowFxn = async () => {
-    await axios.post('http://spreadsheetserver-production.up.railway.app/api/addRow', {
+    await axios.post('https://spreadsheetserver-production.up.railway.app/api/addRow', {
       numRows
     }).then((res) => {
       window.location.reload()
     })
   }
   const addColFxn = async () => {
-    await axios.post('http://spreadsheetserver-production.up.railway.app/api/addCol', {
+    await axios.post('https://spreadsheetserver-production.up.railway.app/api/addCol', {
       numRows, numCols
     }).then((res) => {
       window.location.reload()
     })
   }
   const deleteColFxn = async () => {
-    await axios.post('http://spreadsheetserver-production.up.railway.app/api/delCol', {
+    await axios.post('https://spreadsheetserver-production.up.railway.app/api/delCol', {
       numRows, numCols
     }).then((res) => {
       window.location.reload()
     })
   }
   const deleteRowFxn = async () => {
-    await axios.post('http://spreadsheetserver-production.up.railway.app/api/delRow', {
+    await axios.post('https://spreadsheetserver-production.up.railway.app/api/delRow', {
       numRows
     }).then((res) => {
       window.location.reload()
@@ -96,14 +96,14 @@ const App = () => {
   }
 
   const handleDelete = async () => {
-    await axios.post('http://spreadsheetserver-production.up.railway.app/api/delete', { selected }).then((res) => {
+    await axios.post('https://spreadsheetserver-production.up.railway.app/api/delete', { selected }).then((res) => {
       window.location.reload()
     })
   }
   const handleUndo = async () => {
     if (history.length > 0) {
       redo.push(history[history.length - 1])
-      await axios.post('http://spreadsheetserver-production.up.railway.app/api/undo', { data: history[history.length - 2] }).then((res) => {
+      await axios.post('https://spreadsheetserver-production.up.railway.app/api/undo', { data: history[history.length - 2] }).then((res) => {
         updateData(history[history.length - 2])
         history.pop();
         history.pop();
@@ -112,7 +112,7 @@ const App = () => {
   }
   const handleRedo = async () => {
     if (redo.length > 0) {
-      await axios.post('http://spreadsheetserver-production.up.railway.app/api/undo', { data: redo[redo.length - 1] }).then((res) => {
+      await axios.post('https://spreadsheetserver-production.up.railway.app/api/undo', { data: redo[redo.length - 1] }).then((res) => {
         updateData(redo[redo.length - 1])
         redo.pop()
       })
@@ -188,7 +188,7 @@ function CellRender({ row, index, setSel, history }) {
     setState(e.target.value)
     history.push({ col: row.num + 1, row: index + 1, data: state });
     history.push({ col: row.num + 1, row: index + 1, data: e.target.value });
-    await axios.post('http://spreadsheetserver-production.up.railway.app/api/data', { row: index, col: row.num, data: e.target.value });
+    await axios.post('https://spreadsheetserver-production.up.railway.app/api/data', { row: index, col: row.num, data: e.target.value });
   }
 
   return (
